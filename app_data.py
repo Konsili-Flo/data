@@ -100,22 +100,16 @@ if st.button("Générer le PDF"):
     pdf = FPDF(orientation='P', unit='mm', format='A4')
     pdf.set_auto_page_break(auto=True, margin=15)
 
-    font_path = os.path.join(os.path.dirname(__file__), "DejaVuSans.ttf")
-    if os.path.exists(font_path):
-        pdf.add_font("DejaVu", "", font_path, uni=True)
-        pdf.add_font("DejaVu", "B", font_path, uni=True)
-    else:
-        st.error("Police DejaVuSans.ttf introuvable. Veuillez l'ajouter au dossier de l'application.")
-        st.stop()
+    pdf.set_font("Helvetica", size=10)
 
     salles = st.session_state.salles if st.session_state.salles else [{"nom": "Sans nom", "donnees": {}}]
 
     for salle in salles:
         pdf.add_page()
-        pdf.set_font("DejaVu", 'B', 16)
+        pdf.set_font("Helvetica", 'B', 16)
         pdf.cell(0, 10, f"Salle : {salle['nom'].strip()}", ln=True)
 
-        pdf.set_font("DejaVu", 'B', 14)
+        pdf.set_font("Helvetica", 'B', 14)
         sections = [
             ("Informations générales", ["surface", "observations"]),
             ("Baies", ["baies_nombre", "baies_type", "baies_nom", "baies_commentaire"]),
@@ -128,10 +122,10 @@ if st.button("Générer le PDF"):
         ]
 
         for section_title, fields in sections:
-            pdf.set_font("DejaVu", 'B', 11)
+            pdf.set_font("Helvetica", 'B', 11)
             pdf.set_fill_color(230, 230, 230)
             pdf.cell(0, 8, section_title, ln=True, fill=True)
-            pdf.set_font("DejaVu", '', 9)
+            pdf.set_font("Helvetica", '', 9)
             for field in fields:
                 value = salle["donnees"].get(field, "")
                 if value:
@@ -140,7 +134,7 @@ if st.button("Générer le PDF"):
                         texte = texte.encode('latin-1', 'ignore').decode('latin-1')
                         pdf.set_font("DejaVu", '', 9)
                         pdf.cell(0, 5, texte, ln=True)
-                        pdf.set_font("DejaVu", '', 11)
+                        pdf.set_font("Helvetica", '', 11)
                     except:
                         pdf.set_font("DejaVu", '', 9)
                         pdf.cell(0, 5, f"- {field.replace('_', ' ').capitalize()} : Erreur d'affichage", ln=True)
@@ -148,7 +142,7 @@ if st.button("Générer le PDF"):
 
         photos = salle["donnees"].get("photos", [])
         if photos:
-            pdf.set_font("DejaVu", 'B', 12)
+            pdf.set_font("Helvetica", 'B', 12)
             pdf.cell(0, 10, "📷 Photos de la salle", ln=True)
             pdf.set_font("DejaVu", '', 11)
             for i, img_b64 in enumerate(photos):
