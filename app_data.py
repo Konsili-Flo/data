@@ -107,7 +107,8 @@ if st.button("Générer le PDF"):
     for salle in salles:
         pdf.add_page()
         pdf.set_font("Helvetica", 'B', 16)
-        pdf.cell(0, 10, f"Salle : {salle['nom'].strip()}", ln=True)
+        titre_salle = salle['nom'].strip().encode('latin-1', 'ignore').decode('latin-1')
+pdf.cell(0, 10, f"Salle : {titre_salle}", ln=True)
 
         pdf.set_font("Helvetica", 'B', 14)
         sections = [
@@ -143,7 +144,7 @@ if st.button("Générer le PDF"):
         photos = salle["donnees"].get("photos", [])
         if photos:
             pdf.set_font("Helvetica", 'B', 12)
-            pdf.cell(0, 10, "📷 Photos de la salle", ln=True)
+            pdf.cell(0, 10, "Photos de la salle", ln=True)
             pdf.set_font("Helvetica", '', 11)
             for i, img_b64 in enumerate(photos):
                 pdf.add_page()
