@@ -98,20 +98,18 @@ st.markdown("---")
 st.header("📤 Export PDF")
 if st.button("Générer le PDF"):
     pdf = FPDF(orientation='P', unit='mm', format='A4')
-    pdf.alias_nb_pages()
     pdf.set_auto_page_break(auto=True, margin=15)
 
     pdf.set_font("Helvetica", size=10)
 
     salles = st.session_state.salles if st.session_state.salles else [{"nom": "Sans nom", "donnees": {}}]
 
-        for salle in salles:
+    for salle in salles:
         pdf.add_page()
-                            pdf.set_font("Helvetica", 'B', 16)
-                    titre_salle = salle['nom'].strip().encode('latin-1', 'ignore').decode('latin-1')
-                        pdf.cell(0, 10, f"Salle : {titre_salle}", ln=True)
+        pdf.set_font("Helvetica", 'B', 16)
+        pdf.cell(0, 10, f"Salle : {salle['nom'].strip()}", ln=True)
 
-                        pdf.set_font("Helvetica", 'B', 14)
+        pdf.set_font("Helvetica", 'B', 14)
         sections = [
             ("Informations générales", ["surface", "observations"]),
             ("Baies", ["baies_nombre", "baies_type", "baies_nom", "baies_commentaire"]),
@@ -145,7 +143,7 @@ if st.button("Générer le PDF"):
         photos = salle["donnees"].get("photos", [])
         if photos:
             pdf.set_font("Helvetica", 'B', 12)
-            pdf.cell(0, 10, "Photos de la salle", ln=True)
+            pdf.cell(0, 10, "📷 Photos de la salle", ln=True)
             pdf.set_font("Helvetica", '', 11)
             for i, img_b64 in enumerate(photos):
                 pdf.add_page()
@@ -163,7 +161,7 @@ if st.button("Générer le PDF"):
 
                     pdf.image(rotated_path, x=35, y=y_offset, w=pdf.w - 70)
                     pdf.set_y(y_offset + 60)
-                    pdf.set_font("Helvetica", '', 9)
+                    pdf.set_font("DejaVu", '', 9)
                     pdf.cell(0, 6, f"Photo {i + 1}", ln=True)
                     
                     # Retiré pour éviter double incrémentation
@@ -177,12 +175,6 @@ if st.button("Générer le PDF"):
                     pdf.multi_cell(190, 6, f"Erreur chargement image : {str(e)}")
 
     tmp_pdf = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
-    for i in range(1, pdf.page_no() + 1):
-        pdf.page = i
-        pdf.set_y(-15)
-        pdf.set_font("Helvetica", 'I', 8)
-        pdf.cell(0, 10, f"Page {i} / {{nb}}", align='C')
-
     pdf.output(tmp_pdf.name)
 
     with open(tmp_pdf.name, "rb") as f:
