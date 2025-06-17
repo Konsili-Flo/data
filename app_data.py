@@ -107,10 +107,10 @@ if st.button("Générer le PDF"):
     for salle in salles:
         pdf.add_page()
         pdf.set_font("Helvetica", 'B', 16)
-        titre_salle = salle['nom'].strip().encode('latin-1', 'ignore').decode('latin-1')
-pdf.cell(0, 10, f"Salle : {titre_salle}", ln=True)
+            titre_salle = salle['nom'].strip().encode('latin-1', 'ignore').decode('latin-1')
+    pdf.cell(0, 10, f"Salle : {titre_salle}", ln=True)
 
-        pdf.set_font("Helvetica", 'B', 14)
+            pdf.set_font("Helvetica", 'B', 14)
         sections = [
             ("Informations générales", ["surface", "observations"]),
             ("Baies", ["baies_nombre", "baies_type", "baies_nom", "baies_commentaire"]),
