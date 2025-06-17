@@ -161,7 +161,7 @@ if st.button("Générer le PDF"):
 
                     pdf.image(rotated_path, x=35, y=y_offset, w=pdf.w - 70)
                     pdf.set_y(y_offset + 60)
-                    pdf.set_font("DejaVu", '', 9)
+                    pdf.set_font("Helvetica", '', 9)
                     pdf.cell(0, 6, f"Photo {i + 1}", ln=True)
                     
                     # Retiré pour éviter double incrémentation
