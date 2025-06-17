@@ -132,19 +132,19 @@ if st.button("Générer le PDF"):
                     try:
                         texte = f"- {field.replace('_', ' ').capitalize()} : {str(value).strip()}"
                         texte = texte.encode('latin-1', 'ignore').decode('latin-1')
-                        pdf.set_font("DejaVu", '', 9)
+                        pdf.set_font("Helvetica", '', 9)
                         pdf.cell(0, 5, texte, ln=True)
                         pdf.set_font("Helvetica", '', 11)
                     except:
-                        pdf.set_font("DejaVu", '', 9)
+                        pdf.set_font("Helvetica", '', 9)
                         pdf.cell(0, 5, f"- {field.replace('_', ' ').capitalize()} : Erreur d'affichage", ln=True)
-                        pdf.set_font("DejaVu", '', 11)
+                        pdf.set_font("Helvetica", '', 11)
 
         photos = salle["donnees"].get("photos", [])
         if photos:
             pdf.set_font("Helvetica", 'B', 12)
             pdf.cell(0, 10, "📷 Photos de la salle", ln=True)
-            pdf.set_font("DejaVu", '', 11)
+            pdf.set_font("Helvetica", '', 11)
             for i, img_b64 in enumerate(photos):
                 pdf.add_page()
                 y_offset = 40
